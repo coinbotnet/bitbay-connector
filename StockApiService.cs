@@ -63,7 +63,7 @@ namespace Coinbot.Bitbay
             }
         }
 
-        public async Task<ServiceResponse<Transaction>> PlaceBuyOrder(string baseCoin, string targetCoin, double stack, string apiKey, string secret, double rate)
+        public async Task<ServiceResponse<Transaction>> PlaceBuyOrder(string baseCoin, string targetCoin, double stack, string apiKey, string secret, double rate, bool? testOnly = false)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -77,8 +77,8 @@ namespace Coinbot.Bitbay
 
                 var body = JsonConvert.SerializeObject(new TransactionToMadeDTO
                 {
-                    rate = rate.ToString("0.00", CultureInfo.InvariantCulture),
-                    amount = (stack / rate).ToString("0.#####", CultureInfo.InvariantCulture),
+                    rate = rate.ToString("0.00000000", CultureInfo.InvariantCulture),
+                    amount = (stack / rate).ToString("0.00", CultureInfo.InvariantCulture),
                     offerType = "BUY",
                     mode = "limit",
                     fillOrKill = this.GetStockInfo().FillOrKill
@@ -111,7 +111,7 @@ namespace Coinbot.Bitbay
             }
         }
 
-        public async Task<ServiceResponse<Transaction>> PlaceSellOrder(string baseCoin, string targetCoin, double stack, string apiKey, string secret, double qty, double toSellFor, double? raisedChangeToSell = null)
+        public async Task<ServiceResponse<Transaction>> PlaceSellOrder(string baseCoin, string targetCoin, double stack, string apiKey, string secret, double qty, double toSellFor, double? raisedChangeToSell = null, bool? testOnly = false)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -125,8 +125,8 @@ namespace Coinbot.Bitbay
 
                 var body = JsonConvert.SerializeObject(new TransactionToMadeDTO
                 {
-                    rate = raisedChangeToSell == null ? toSellFor.ToString("0.00", CultureInfo.InvariantCulture) : raisedChangeToSell.Value.ToString("0.00", CultureInfo.InvariantCulture),
-                    amount = qty.ToString("0.#####", CultureInfo.InvariantCulture),
+                    rate = raisedChangeToSell == null ? toSellFor.ToString("0.00000000", CultureInfo.InvariantCulture) : raisedChangeToSell.Value.ToString("0.00000000", CultureInfo.InvariantCulture),
+                    amount = qty.ToString("0.00", CultureInfo.InvariantCulture),
                     offerType = "SELL",
                     mode = "limit",
                     fillOrKill = this.GetStockInfo().FillOrKill
