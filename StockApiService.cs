@@ -78,7 +78,7 @@ namespace Coinbot.Bitbay
                 var body = JsonConvert.SerializeObject(new TransactionToMadeDTO
                 {
                     rate = rate.ToString("0.00000000", CultureInfo.InvariantCulture),
-                    amount = (stack / rate).ToString("0.00", CultureInfo.InvariantCulture),
+                    amount = (stack / rate).ToString("0.00000000", CultureInfo.InvariantCulture),
                     offerType = "BUY",
                     mode = "limit",
                     fillOrKill = this.GetStockInfo().FillOrKill
@@ -126,7 +126,7 @@ namespace Coinbot.Bitbay
                 var body = JsonConvert.SerializeObject(new TransactionToMadeDTO
                 {
                     rate = raisedChangeToSell == null ? toSellFor.ToString("0.00000000", CultureInfo.InvariantCulture) : raisedChangeToSell.Value.ToString("0.00000000", CultureInfo.InvariantCulture),
-                    amount = qty.ToString("0.00", CultureInfo.InvariantCulture),
+                    amount = qty.ToString("0.00000000", CultureInfo.InvariantCulture),
                     offerType = "SELL",
                     mode = "limit",
                     fillOrKill = this.GetStockInfo().FillOrKill
